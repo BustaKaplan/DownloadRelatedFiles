@@ -1,0 +1,6 @@
+public class DownloadRelatedFilesController {
+    @AuraEnabled
+    public static List<ContentDocumentLink> getRecords(Id recordId){
+    	return [SELECT ContentDocumentId, ContentDocument.Title, ContentDocument.CreatedDate, ContentDocument.FileType, ContentDocument.ContentSize, LinkedEntityId  FROM ContentDocumentLink where LinkedEntityId = :recordId];
+    }
+}
