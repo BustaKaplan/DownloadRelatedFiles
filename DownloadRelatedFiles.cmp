@@ -1,0 +1,45 @@
+<aura:component controller = "DownloadRelatedFilesController" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global" >
+    <aura:attribute name="relatedAttachments" type="ContentDocumentLink[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="baseURL" type="String" /> 
+    
+    <lightning:card>
+        <!--Header-->
+    	<div class="slds-page-header">
+        	<div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                  <div class="slds-media">
+                    <div class="slds-media__figure">
+                      <span class="slds-icon_container slds-icon-standard-opportunity" title="opportunity">
+                      <lightning:icon iconName="utility:file" alternativeText="Download" title="Download" />
+                        <span class="slds-assistive-text">opportunity</span>
+                      </span>
+                    </div>
+                    <div class="slds-media__body">
+                      <div class="slds-page-header__name">
+                        <div class="slds-page-header__name-title">
+                          <h1> <span class="slds-page-header__title slds-truncate" title="Files">Files</span></h1>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        	</div>
+        <!--File iteration-->
+        <aura:iteration items="{!v.relatedAttachments}" var="item">
+            <div class="slds-grid">
+  				<div class="slds-col, slds-shrink, slds-p-horizontal_medium">
+                	<lightning:icon iconName="action:download" size="x-small" alternativeText="Download" title="Download" />
+                </div>
+  				<div class="slds-col">
+                    <a href= "{!v.baseURL + '/sfc/servlet.shepherd/document/download/' + item.ContentDocumentId}">  {!item.ContentDocument.Title}</a>
+                    <p class="slds-m-around--none secondaryFields slds-text-body--small slds-truncate"> 
+                    	<lightning:formattedDateTime value="{!item.ContentDocument.CreatedDate}"/> • {!item.ContentDocument.ContentSize} • {!item.ContentDocument.FileType}
+                    </p>
+      			</div>
+            </div>
+		</aura:iteration>
+     </lightning:card>   
+</aura:component>
